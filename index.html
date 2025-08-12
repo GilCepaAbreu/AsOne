@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AsOne </title>
     <link rel="icon" type="image/png" href="image.png" style="border-radius: 50%;">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -12,6 +12,18 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        /* Prevent horizontal scrolling */
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Ensure all containers respect max-width */
+        .container, .nav-container, .hero-content {
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
         :root {
@@ -207,7 +219,7 @@
         .login-btn, .logout-btn {
             background: var(--gradient-primary);
             color: white;
-            padding: 1rem 2rem;
+            padding: 1rem 1.2rem;
             border: none;
             border-radius: var(--border-radius);
             cursor: pointer;
@@ -217,10 +229,15 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
             box-shadow: var(--shadow-soft);
             position: relative;
             overflow: hidden;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .login-btn::before, .logout-btn::before {
@@ -1463,8 +1480,56 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            /* Prevent horizontal overflow */
+            html, body {
+                overflow-x: hidden !important;
+                width: 100% !important;
+            }
+            
+            /* Navigation adjustments */
+            .nav-container {
+                padding: 0 1rem;
+                width: 100%;
+                max-width: 100%;
+            }
+            
             .nav-menu {
                 display: none;
+            }
+
+            /* Logo adjustments for mobile */
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .logo-img {
+                width: 40px;
+                height: 40px;
+            }
+
+            /* Mostrar apenas o botão Área Cliente em mobile */
+            .nav-menu + div {
+                display: block !important;
+                margin-right: 0;
+            }
+
+            .nav-menu + div .login-btn {
+                padding: 0.8rem;
+                font-size: 1rem;
+                width: 45px;
+                height: 45px;
+            }
+
+            /* Container adjustments */
+            .container {
+                padding: 0 1rem;
+                max-width: 100%;
+            }
+
+            /* Hero section mobile */
+            .hero-content {
+                padding: 0 1rem;
+                max-width: 100%;
             }
 
             .hero h1 {
@@ -1482,6 +1547,16 @@
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
+                width: 100%;
+                padding: 0 1rem;
+            }
+            
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+                margin: 0.5rem 0;
+                padding: 1.2rem 2rem;
+                font-size: 1rem;
             }
 
             .about-content {
@@ -1492,6 +1567,12 @@
             .services-grid,
             .gallery-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .service-card, .gallery-item {
+                margin: 0 auto;
+                max-width: 100%;
             }
 
             .pricing-grid {
@@ -1510,21 +1591,76 @@
 
             .section-title {
                 font-size: 2.5rem;
+                padding: 0 1rem;
+            }
+            
+            .section-subtitle {
+                padding: 0 1rem;
             }
 
             .about-image i {
                 font-size: 10rem;
                 padding: 2rem;
             }
+            
+            /* Fix any potential text overflow */
+            h1, h2, h3, h4, h5, h6, p {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
         }
 
         @media (max-width: 480px) {
+            /* Extra small screens adjustments */
+            .nav-container {
+                padding: 0 0.5rem;
+            }
+            
+            .container {
+                padding: 0 0.5rem;
+            }
+            
+            .hero-content {
+                padding: 0 0.5rem;
+            }
+            
             .hero h1 {
                 font-size: 2.5rem;
+                line-height: 1.2;
             }
 
             .logo {
+                font-size: 1.8rem;
+            }
+            
+            .logo-img {
+                width: 35px;
+                height: 35px;
+            }
+
+            /* Ajustar botão Área Cliente para telas muito pequenas */
+            .nav-menu + div .login-btn {
+                padding: 0.7rem;
+                font-size: 0.9rem;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .cta-button {
+                padding: 1rem 1.5rem;
+                font-size: 0.9rem;
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .section-title {
                 font-size: 2rem;
+                padding: 0 0.5rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+                padding: 0 0.5rem;
             }
 
             .pricing-grid {
@@ -1581,6 +1717,48 @@
                 font-size: 20px;
             }
         }
+        
+        /* Extra small devices (phones, 320px and down) */
+        @media (max-width: 320px) {
+            .nav-container {
+                padding: 0 0.25rem;
+            }
+            
+            .container, .hero-content {
+                padding: 0 0.25rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .logo-img {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .cta-button {
+                padding: 0.8rem 1rem;
+                font-size: 0.8rem;
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Fix hero background attachment for mobile */
+        @media (max-width: 768px) {
+            .hero {
+                background-attachment: scroll;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1600,8 +1778,8 @@
                 <li><a href="#pricing">Planos</a></li>
                 <li><a href="#contact">Contacto</a></li>
             </ul>
-            <div>
-                <button class="login-btn" onclick="openLoginModal()">Área Cliente</button>
+            <div style="margin-right: 2rem;">
+                <button class="login-btn" onclick="openLoginModal()"><i class="fas fa-user"></i></button>
             </div>
         </div>
     </nav>
