@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AsOne </title>
+    <link rel="icon" type="image/png" href="image.png" style="border-radius: 50%;">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Prevent horizontal scrolling */
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Ensure all containers respect max-width */
+        .container, .nav-container, .hero-content {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e293b;
+            --accent-color: #3b82f6;
+            --dark-bg: #0f172a;
+            --light-bg: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --white: #ffffff;
+            --gradient-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            --gradient-dark: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            --gradient-accent: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+            --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-large: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --border-radius: 16px;
+            --border-radius-lg: 24px;
+        }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            background: var(--white);
+            cursor: default;
+        }
+
+        /* Custom cursor effects */
+        * {
+            cursor: inherit;
+        }
+
+        a, button, .cta-button, .login-btn, .logout-btn {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        a:hover, button:hover, .cta-button:hover, .login-btn:hover, .logout-btn:hover {
+            cursor: pointer;
+        }
+
+        /* Header & Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: var(--shadow-soft);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-medium);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            text-transform: none;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-medium);
+            border: 3px solid var(--primary-color);
+            background-image: url('image.png');
+            background-size: cover;
+            background-position: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(37, 99, 235, 0.1) 50%, transparent 70%);
+            animation: logoShimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes logoShimmer {
+            0%, 100% { transform: translateX(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .logo-img::before {
+            content: 'A1';
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--gradient-primary);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.05), transparent);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 8px;
+            z-index: -1;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu a:hover::before {
+            width: calc(100% + 1rem);
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .login-btn, .logout-btn {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 1.2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-btn::before, .logout-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .login-btn:hover::before, .logout-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:hover, .logout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-large);
+            background: var(--gradient-accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: 
+                linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.85) 30%, rgba(37, 99, 235, 0.8) 70%, rgba(59, 130, 246, 0.75) 100%),
+                url('img/img1.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(37, 99, 235, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                linear-gradient(45deg, transparent 30%, rgba(37, 99, 235, 0.1) 50%, transparent 70%);
+            animation: heroShimmer 6s ease-in-out infinite;
+        }
+
+        @keyframes heroShimmer {
+            0%, 100% { 
+                opacity: 0.8;
+                transform: translateX(-100%) scale(1);
+            }
+            50% { 
+                opacity: 1;
+                transform: translateX(100%) scale(1.1);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 400;
+            animation: fadeInUp 1s ease;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-transform: none;
+            letter-spacing: 3px;
+            animation: fadeInUp 1s ease 0.2s both;
+            color: #ffffff;
+            text-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease 0.4s both;
+            color: #ffffff;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            font-weight: 400;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.4rem 3.5rem;
+            border: none;
+            border-radius: var(--border-radius-lg);
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-large);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(37, 99, 235, 0.5);
+        }
+
+        /* Pricing Card Button */
+        .pricing-card .cta-button {
+            padding: 0.8rem 1.5rem;
+            font-size: 0.9rem;
+            margin: 0 auto;
+            display: block;
+            width: auto;
+            max-width: 150px;
+            letter-spacing: 1px;
+            border-radius: var(--border-radius);
+        }
+
+        .pricing-card .cta-button:hover {
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            border: 3px solid var(--white);
+            color: var(--white);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .cta-secondary:hover {
+            background: var(--white);
+            color: var(--dark-bg);
+            box-shadow: 0 25px 50px rgba(255, 255, 255, 0.4);
+            border-color: var(--white);
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-transform: none;
+            letter-spacing: 3px;
+            color: var(--text-dark);
+            position: relative;
+            background: linear-gradient(135deg, var(--text-dark) 0%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--light-bg);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            text-transform: uppercase;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .feature-item i {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .about-image {
+            position: relative;
+            text-align: center;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: 20px;
+            bottom: 20px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        .about-image i {
+            font-size: 15rem;
+            color: var(--primary-color);
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        /* Portfolio & História Section */
+        .portfolio {
+            background: white;
+        }
+
+        /* Portfolio Section - quando separada */
+        #portfolio {
+            background: var(--light-bg);
+        }
+
+        .history-content {
+            margin-bottom: 5rem;
+        }
+
+        .history-text {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .history-text h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .history-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .history-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+            padding: 3rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--light-bg);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 40px rgba(0, 123, 255, 0.1);
+        }
+
+        .stat-number {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .portfolio-gallery h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .gallery-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        .gallery-image-placeholder {
+            height: 250px;
+            background: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--primary-color);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-image-placeholder:hover {
+            background: rgba(0, 123, 255, 0.05);
+            border-style: solid;
+        }
+
+        .gallery-image-placeholder i {
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.6;
+        }
+
+        /* Timeline Styles */
+        .timeline-container {
+            margin: 4rem 0;
+            padding: 2rem 0;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 4rem 0;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 3rem;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 3rem;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+            border: 4px solid white;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-marker {
+            right: -40px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-marker {
+            left: -40px;
+        }
+
+        .timeline-year {
+            color: white;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+            border-color: var(--primary-color);
+        }
+
+        .timeline-image-placeholder {
+            width: 100%;
+            height: 180px;
+            background: var(--light-bg);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-image-placeholder:hover {
+            background: rgba(0, 123, 255, 0.05);
+            border-style: solid;
+        }
+
+        .timeline-image-placeholder i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            opacity: 0.6;
+        }
+
+        /* Timeline Responsive */
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                padding-left: 80px !important;
+                padding-right: 0 !important;
+            }
+
+            .timeline-marker {
+                left: 0 !important;
+                right: auto !important;
+            }
+
+            .timeline-content {
+                margin-left: 0;
+            }
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 3.5rem 2.5rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-soft);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradient-primary);
+            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(37, 99, 235, 0.02) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover::after {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: var(--shadow-large);
+            border-color: var(--primary-color);
+        }
+
+        .service-card i {
+            font-size: 5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover i {
+            transform: scale(1.1) rotateY(360deg);
+        }
+
+        .service-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            text-transform: uppercase;
+        }
+
+        .service-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background: var(--light-bg);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            padding: 3rem 2rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 2px solid transparent;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(37, 99, 235, 0.02) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .pricing-card:hover::before {
+            opacity: 1;
+        }
+
+        .pricing-card.featured {
+            transform: scale(1.05);
+            background: var(--gradient-dark);
+            color: white;
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-large);
+        }
+
+        .pricing-card.featured::after {
+            content: 'MAIS POPULAR';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.7rem 2rem;
+            border-radius: var(--border-radius);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-large);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-15px);
+        }
+
+        .plan-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .plan-price {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-period {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features li {
+            padding: 0.5rem 0;
+            color: var(--text-light);
+        }
+
+        .plan-features li i {
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--gradient-dark);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(37, 99, 235, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.2) 0%, transparent 50%);
+        }
+
+        .contact .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-info {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .contact-info p {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            font-size: 1.2rem;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-info p:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .contact-info i {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(37, 99, 235, 0.2);
+            border-radius: 50%;
+        }
+
+        /* Login Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 50%, rgba(37, 99, 235, 0.85) 100%);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                backdrop-filter: blur(0px);
+            }
+            to { 
+                opacity: 1; 
+                backdrop-filter: blur(25px);
+            }
+        }
+
+        @keyframes slideUpScale {
+            from { 
+                opacity: 0;
+                transform: translateY(100px) scale(0.8) rotateX(15deg);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(-10px) scale(1.02) rotateX(0deg);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1) rotateX(0deg);
+            }
+        }
+
+        .modal-content {
+            background: 
+                radial-gradient(circle at top left, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
+                linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
+            margin: 8% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 420px;
+            max-height: 70vh;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.25),
+                0 10px 30px rgba(37, 99, 235, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            animation: slideUpScale 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow: hidden;
+            position: relative;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: var(--gradient-primary);
+            border-radius: 28px 28px 0 0;
+        }
+
+        .modal-content::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.08) 0%, transparent 30%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.06) 0%, transparent 30%);
+            border-radius: 28px;
+            z-index: 1;
+        }
+
+        .close {
+            color: #64748b;
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            font-size: 24px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 10;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: 
+                linear-gradient(145deg, rgba(255, 255, 255, 0.8) 0%, rgba(248, 250, 252, 0.6) 100%);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .close:hover {
+            color: var(--primary-color);
+            background: 
+                linear-gradient(145deg, rgba(37, 99, 235, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+            transform: rotate(-90deg) scale(1.1);
+            box-shadow: 
+                0 15px 35px rgba(37, 99, 235, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            border-color: rgba(37, 99, 235, 0.2);
+        }
+
+        .login-form {
+            padding: 2.5rem 2.5rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+            justify-content: center;
+            box-shadow: 
+                0 20px 50px rgba(37, 99, 235, 0.4),
+                0 8px 25px rgba(0, 0, 0, 0.15),
+                inset 0 2px 15px rgba(255, 255, 255, 0.3),
+                inset 0 -2px 15px rgba(0, 0, 0, 0.1);
+            border: 4px solid var(--primary-color);
+            animation: pulse 3s infinite;
+        }
+
+        .login-form h2 {
+            font-family: 'Oswald', sans-serif;
+            text-align: center;
+            margin: 0 0 1rem;
+            color: var(--text-dark);
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 50%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-subtitle {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dark);
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .input-container i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1.2rem;
+            transition: all 0.4s ease;
+            z-index: 3;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1.8rem 1.8rem 1.8rem 4rem;
+            border: 2px solid rgba(226, 232, 240, 0.8);
+            border-radius: 18px;
+            background: 
+                linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%);
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 
+                inset 0 2px 8px rgba(0, 0, 0, 0.05),
+                0 2px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(100, 116, 139, 0.6);
+            font-weight: 400;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 
+                0 0 0 6px rgba(37, 99, 235, 0.1),
+                0 8px 30px rgba(37, 99, 235, 0.2),
+                inset 0 2px 8px rgba(37, 99, 235, 0.05);
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .form-group input:focus + i,
+        .input-container:focus-within i {
+            color: var(--primary-color);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .submit-btn {
+            background: 
+                linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 50%, var(--primary-color) 100%);
+            color: white;
+            padding: 1.8rem 3.5rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: 100%;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 15px 35px rgba(37, 99, 235, 0.3),
+                0 5px 15px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.6s ease;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 25px 60px rgba(37, 99, 235, 0.4),
+                0 15px 35px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            background: 
+                linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 50%, var(--accent-color) 100%);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-4px) scale(0.98);
+        }
+
+        /* Login Message */
+        .login-message {
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .login-message.success {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-left: 4px solid #047857;
+        }
+
+        .login-message.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            border-left: 4px solid #b91c1c;
+        }
+
+        .login-message.loading {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            border-left: 4px solid #1d4ed8;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gradient-dark);
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+        }
+
+        .footer p {
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(80px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { 
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 0 0 0 20px rgba(37, 99, 235, 0);
+            }
+            100% { 
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .pulse {
+            animation: pulse 3s infinite;
+        }
+
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            /* Prevent horizontal overflow */
+            html, body {
+                overflow-x: hidden !important;
+                width: 100% !important;
+            }
+            
+            /* Navigation adjustments */
+            .nav-container {
+                padding: 0 1rem;
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+
+            /* Logo adjustments for mobile */
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .logo-img {
+                width: 40px;
+                height: 40px;
+            }
+
+            /* Mostrar apenas o botão Área Cliente em mobile */
+            .nav-menu + div {
+                display: block !important;
+                margin-right: 0;
+            }
+
+            .nav-menu + div .login-btn {
+                padding: 0.8rem;
+                font-size: 1rem;
+                width: 45px;
+                height: 45px;
+            }
+
+            /* Container adjustments */
+            .container {
+                padding: 0 1rem;
+                max-width: 100%;
+            }
+
+            /* Hero section mobile */
+            .hero-content {
+                padding: 0 1rem;
+                max-width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                padding: 0 1rem;
+            }
+            
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+                margin: 0.5rem 0;
+                padding: 1.2rem 2rem;
+                font-size: 1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .services-grid,
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .service-card, .gallery-item {
+                margin: 0 auto;
+                max-width: 100%;
+            }
+
+            .pricing-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+
+            .history-stats {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+                padding: 0 1rem;
+            }
+            
+            .section-subtitle {
+                padding: 0 1rem;
+            }
+
+            .about-image i {
+                font-size: 10rem;
+                padding: 2rem;
+            }
+            
+            /* Fix any potential text overflow */
+            h1, h2, h3, h4, h5, h6, p {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Extra small screens adjustments */
+            .nav-container {
+                padding: 0 0.5rem;
+            }
+            
+            .container {
+                padding: 0 0.5rem;
+            }
+            
+            .hero-content {
+                padding: 0 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+            
+            .logo-img {
+                width: 35px;
+                height: 35px;
+            }
+
+            /* Ajustar botão Área Cliente para telas muito pequenas */
+            .nav-menu + div .login-btn {
+                padding: 0.7rem;
+                font-size: 0.9rem;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .cta-button {
+                padding: 1rem 1.5rem;
+                font-size: 0.9rem;
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+                padding: 0 0.5rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+                padding: 0 0.5rem;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .modal-content {
+                margin: 5% auto;
+                width: 95%;
+                max-width: 400px;
+                border-radius: 24px;
+            }
+            
+            .login-form {
+                padding: 3.5rem 2rem 2.5rem;
+            }
+
+            .login-form::before {
+                width: 80px;
+                height: 80px;
+                top: 30px;
+                border: 3px solid var(--primary-color);
+            }
+            
+            .login-form h2 {
+                font-size: 2.2rem;
+                margin: 4.5rem 0 0.8rem;
+                letter-spacing: 2px;
+            }
+
+            .login-subtitle {
+                font-size: 1rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .form-group input {
+                padding: 1.6rem 1.6rem 1.6rem 3.8rem;
+                font-size: 1rem;
+                border-radius: 16px;
+            }
+
+            .submit-btn {
+                padding: 1.6rem 3rem;
+                font-size: 1.1rem;
+                border-radius: 18px;
+            }
+
+            .close {
+                top: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+        
+        /* Extra small devices (phones, 320px and down) */
+        @media (max-width: 320px) {
+            .nav-container {
+                padding: 0 0.25rem;
+            }
+            
+            .container, .hero-content {
+                padding: 0 0.25rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .logo-img {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .cta-button {
+                padding: 0.8rem 1rem;
+                font-size: 0.8rem;
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Fix hero background attachment for mobile */
+        @media (max-width: 768px) {
+            .hero {
+                background-attachment: scroll;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <div class="logo-img"></div>
+                AsOne
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#historia">História</a></li>
+                <li><a href="#portfolio">Portfólio</a></li>
+                <li><a href="#services">Serviços</a></li>
+                <li><a href="#pricing">Planos</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+            <div style="margin-right: 2rem;">
+                <button class="login-btn" onclick="openLoginModal()"><i class="fas fa-user"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>AsOne</h1>
+            <p>Transforme o seu corpo, transforme a sua vida. Treinos personalizados e acompanhamento profissional para alcançar os seus objetivos de fitness.</p>
+            <div class="cta-buttons">
+                <a href="#services" class="cta-button">Começar Agora</a>
+                <a href="#about" class="cta-button cta-secondary">Saber Mais</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about">
+        <div class="container">
+            <h2 class="section-title">Sobre o AsOne</h2>
+            <p class="section-subtitle">O seu parceiro de confiança na jornada para uma vida mais saudável e ativa</p>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Excelência em Fitness</h3>
+                    <p>O AsOne é uma comunidade dedicada a transformar vidas através do exercício físico. Com equipamentos de última geração e uma equipa de profissionais altamente qualificados, oferecemos uma experiência de treino única e personalizada.</p>
+                    <p>A nossa filosofia baseia-se na ideia de que cada pessoa é única, e por isso cada programa de treino deve ser adaptado às suas necessidades específicas, objetivos e estilo de vida.</p>
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Equipamentos Modernos</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Profissionais Certificados</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Horários Flexíveis</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Ambiente Motivador</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <i class="fas fa-dumbbell pulse float"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- História Section -->
+    <section id="historia" class="section portfolio">
+        <div class="container">
+            <h2 class="section-title">A Nossa História</h2>
+            <p class="section-subtitle">Conheça a jornada que nos trouxe até aqui</p>
+            
+            <!-- História da Empresa -->
+            <div class="history-content">
+                <div class="history-text">
+                    <p>O AsOne nasceu em 2020 de um sonho partilhado: criar um espaço onde cada pessoa pudesse descobrir o seu potencial máximo através do exercício físico. Fundado por uma equipa de profissionais apaixonados por fitness e bem-estar, começámos com uma visão simples mas poderosa - que todos merecem acesso a treino de qualidade e acompanhamento personalizado.</p>
+                    
+                    <p>Ao longo dos anos, evoluímos de um pequeno estúdio para um centro de excelência em fitness, sempre mantendo os nossos valores fundamentais: dedicação, profissionalismo e resultados reais. Hoje, orgulhamo-nos de ter transformado centenas de vidas e de continuar a crescer como uma família unida pela paixão do exercício físico.</p>
+                    
+                    <!-- Timeline -->
+                    <div class="timeline-container">
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-marker">
+                                    <div class="timeline-year">2020</div>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-image-placeholder">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker">
+                                    <div class="timeline-year">2022</div>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-image-placeholder">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker">
+                                    <div class="timeline-year">2025</div>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-image-placeholder">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="history-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">Anos de Experiência</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="section">
+        <div class="container">
+            <h2 class="section-title">O Nosso Espaço</h2>
+            <p class="section-subtitle">Equipamentos modernos e ambiente motivador para o seu treino</p>
+            
+            <!-- Portfolio de Imagens -->
+            <div class="portfolio-gallery">
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <div class="gallery-image-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <div class="container">
+            <h2 class="section-title">Os Nossos Serviços</h2>
+            <p class="section-subtitle">Programas completos de treino adaptados aos seus objetivos</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>Personal Training</h3>
+                    <p>Treinos individuais personalizados com acompanhamento dedicado de um personal trainer experiente para maximizar os seus resultados.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-apple-alt"></i>
+                    <h3>Nutrição</h3>
+                    <p>Planos alimentares personalizados criados por nutricionistas qualificados para complementar o seu programa de treino.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>Psicologia</h3>
+                    <p>Apoio psicológico especializado para desenvolver mentalidade positiva, motivação e superação de bloqueios mentais no seu percurso fitness.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="section pricing">
+        <div class="container">
+            <h2 class="section-title">Planos</h2>
+            <p class="section-subtitle">Escolha o plano que melhor se adapta ao seu estilo de vida e objetivos</p>
+            
+            <!-- Individual Plans -->
+            <div style="margin-bottom: 4rem;">
+                <h3 style="text-align: center; font-family: 'Oswald', sans-serif; font-size: 2rem; margin-bottom: 2rem; color: var(--text-dark); text-transform: uppercase;">Planos Individual</h3>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Individual</h3>
+                        <div class="plan-price">1x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 1 sessão semanal</li>
+                            <li><i class="fas fa-check"></i> Treino personalizado</li>
+                            <li><i class="fas fa-check"></i> Acompanhamento individual</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Individual</h3>
+                        <div class="plan-price">2x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 2 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino personalizado</li>
+                            <li><i class="fas fa-check"></i> Acompanhamento individual</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card featured">
+                        <h3 class="plan-name">Individual</h3>
+                        <div class="plan-price">3x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 3 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino personalizado</li>
+                            <li><i class="fas fa-check"></i> Acompanhamento individual</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Individual</h3>
+                        <div class="plan-price">4x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 4 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino personalizado</li>
+                            <li><i class="fas fa-check"></i> Acompanhamento individual</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Individual</h3>
+                        <div class="plan-price">5x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 5 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino personalizado</li>
+                            <li><i class="fas fa-check"></i> Acompanhamento individual</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Duo Plans -->
+            <div>
+                <h3 style="text-align: center; font-family: 'Oswald', sans-serif; font-size: 2rem; margin-bottom: 2rem; color: var(--text-dark); text-transform: uppercase;">Planos Duo</h3>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Duo</h3>
+                        <div class="plan-price">1x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 1 sessão semanal</li>
+                            <li><i class="fas fa-check"></i> Treino em casal/dupla</li>
+                            <li><i class="fas fa-check"></i> Motivação partilhada</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Duo</h3>
+                        <div class="plan-price">2x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 2 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino em casal/dupla</li>
+                            <li><i class="fas fa-check"></i> Motivação partilhada</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card featured">
+                        <h3 class="plan-name">Duo</h3>
+                        <div class="plan-price">3x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 3 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino em casal/dupla</li>
+                            <li><i class="fas fa-check"></i> Motivação partilhada</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Duo</h3>
+                        <div class="plan-price">4x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 4 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino em casal/dupla</li>
+                            <li><i class="fas fa-check"></i> Motivação partilhada</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Duo</h3>
+                        <div class="plan-price">5x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 5 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino em casal/dupla</li>
+                            <li><i class="fas fa-check"></i> Motivação partilhada</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <h2 class="section-title">Entre em Contacto</h2>
+            <p class="section-subtitle">Pronto para começar a sua transformação? Contacte-nos hoje!</p>
+            <div class="contact-info" style="max-width: 600px; margin: 0 auto; text-align: center;">
+                <h3>Informações de Contacto</h3>
+                <p><i class="fas fa-map-marker-alt"></i> R. João Conde, 4740-305 Esposende</p>
+                <p><i class="fas fa-phone"></i> +351 912 798 296</p>
+                <p><i class="fab fa-facebook"></i> facebook.com/AsOne.pt</p>
+                <p><i class="fab fa-instagram"></i> @AsOne.pt</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 AsOne. Todos os direitos reservados. | Transforme-se connosco!</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">Site desenvolvido por <a href="https://www.codecraftstudio.pt" target="_blank" style="color: var(--primary-color); text-decoration: none;">www.codecraftstudio.pt</a></p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <div class="login-form">
+                <h2>Área de Administração</h2>
+                <p class="login-subtitle">Aceda ao painel de controlo do AsOne</p>
+                
+                <div id="loginMessage" class="login-message" style="display: none;"></div>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <div class="input-container">
+                            <input type="email" id="email" name="email" required placeholder="Digite o seu email">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Palavra-passe</label>
+                        <div class="input-container">
+                            <input type="password" id="password" name="password" required placeholder="Digite a sua palavra-passe">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="loginBtn">
+                        <i class="fas fa-sign-in-alt" style="margin-right: 0.5rem;"></i>
+                        Entrar
+                    </button>
+                </form>
+                
+                <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(37, 99, 235, 0.1); border-radius: 10px; border-left: 4px solid var(--primary-color);">
+                    <p style="margin: 0; font-size: 0.9rem; color: var(--text-light);">
+                        <strong>Acesso Restrito:</strong> Esta área é exclusiva para administradores do AsOne.
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; color: var(--text-light);">
+                        <strong>Conta de teste:</strong> admin@asone.pt / admin123
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Login Modal
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('loginModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const loginBtn = document.getElementById('loginBtn');
+            const messageDiv = document.getElementById('loginMessage');
+            
+            // Show loading state
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 0.5rem;"></i>Entrando...';
+            loginBtn.disabled = true;
+            
+            showLoginMessage('A verificar credenciais...', 'loading');
+            
+            fetch('process_login.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showLoginMessage('Login realizado com sucesso! A redirecionar...', 'success');
+                    setTimeout(() => {
+                        window.location.href = data.redirect;
+                    }, 1500);
+                } else {
+                    showLoginMessage(data.message, 'error');
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right: 0.5rem;"></i>Entrar';
+                    loginBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                showLoginMessage('Erro de conexão. Tente novamente.', 'error');
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right: 0.5rem;"></i>Entrar';
+                loginBtn.disabled = false;
+            });
+        });
+
+        function showLoginMessage(message, type) {
+            const messageDiv = document.getElementById('loginMessage');
+            messageDiv.textContent = message;
+            messageDiv.className = `login-message ${type}`;
+            messageDiv.style.display = 'block';
+        }
+
+        // Check for logout success message
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('logout') === 'success') {
+            setTimeout(() => {
+                alert('Logout realizado com sucesso!');
+                // Remove the parameter from URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }, 500);
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Pricing buttons
+        document.querySelectorAll('.pricing-card .cta-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const contactSection = document.querySelector('#contact');
+                if (contactSection) {
+                    contactSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Services animation on scroll
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -80px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) scale(1)';
+                }
+            });
+        }, observerOptions);
+
+        // Add animation to service cards with stagger effect
+        document.querySelectorAll('.service-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px) scale(0.9)';
+            card.style.transition = `all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.1}s`;
+            observer.observe(card);
+        });
+
+        // Add animation to pricing cards with stagger effect
+        document.querySelectorAll('.pricing-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px) scale(0.9)';
+            card.style.transition = `all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.05}s`;
+            observer.observe(card);
+        });
+
+        // Add animation to timeline items
+        document.querySelectorAll('.timeline-item').forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = index % 2 === 0 ? 'translateX(-100px)' : 'translateX(100px)';
+            item.style.transition = `all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.2}s`;
+            observer.observe(item);
+        });
+
+        // Add animation to stats
+        document.querySelectorAll('.stat-item').forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(50px) scale(0.8)';
+            item.style.transition = `all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.1}s`;
+            observer.observe(item);
+        });
+
+        // Add animation to gallery items
+        document.querySelectorAll('.gallery-item').forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(50px) scale(0.9)';
+            item.style.transition = `all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.1}s`;
+            observer.observe(item);
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const rate = scrolled * -0.5;
+            
+            if (hero) {
+                hero.style.transform = `translateY(${rate}px)`;
+            }
+        });
+    </script>
+</body>
+</html>

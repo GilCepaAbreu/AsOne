@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AsOne </title>
+    <link rel="icon" type="image/png" href="image.png" style="border-radius: 50%;">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #1a1a1a;
+            --accent-color: #0056b3;
+            --dark-bg: #000000;
+            --light-bg: #f8f9fa;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --white: #ffffff;
+            --gradient-primary: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            --gradient-dark: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0, 123, 255, 0.1);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 30px rgba(0, 123, 255, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'Roboto', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            text-transform: none;
+            letter-spacing: 1px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+            border: 2px solid var(--primary-color);
+            background-image: url('image.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .logo-img::before {
+            content: 'A1';
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }
+
+        .login-btn, .logout-btn {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .login-btn:hover, .logout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: 
+                linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(26, 26, 26, 0.8) 50%, rgba(0, 123, 255, 0.75) 100%),
+                url('img/img1.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(0, 123, 255, 0.1) 50%, transparent 70%);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 400;
+            animation: fadeInUp 1s ease;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero h1 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-transform: none;
+            letter-spacing: 2px;
+            animation: fadeInUp 1s ease 0.2s both;
+            color: #ffffff;
+            text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.9);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease 0.4s both;
+            color: #ffffff;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            font-weight: 400;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 123, 255, 0.4);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+
+        .cta-secondary:hover {
+            background: var(--white);
+            color: var(--dark-bg);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--light-bg);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            text-transform: uppercase;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .feature-item i {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .about-image {
+            position: relative;
+            text-align: center;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: 20px;
+            bottom: 20px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        .about-image i {
+            font-size: 15rem;
+            color: var(--primary-color);
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        /* Portfolio & História Section */
+        .portfolio {
+            background: white;
+        }
+
+        /* Portfolio Section - quando separada */
+        #portfolio {
+            background: var(--light-bg);
+        }
+
+        .history-content {
+            margin-bottom: 5rem;
+        }
+
+        .history-text {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .history-text h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .history-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .history-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+            padding: 3rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--light-bg);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 40px rgba(0, 123, 255, 0.1);
+        }
+
+        .stat-number {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .portfolio-gallery h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .gallery-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        .gallery-image-placeholder {
+            height: 250px;
+            background: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--primary-color);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-image-placeholder:hover {
+            background: rgba(0, 123, 255, 0.05);
+            border-style: solid;
+        }
+
+        .gallery-image-placeholder i {
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.6;
+        }
+
+        /* Timeline Styles */
+        .timeline-container {
+            margin: 4rem 0;
+            padding: 2rem 0;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 4rem 0;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 3rem;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 3rem;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+            border: 4px solid white;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-marker {
+            right: -40px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-marker {
+            left: -40px;
+        }
+
+        .timeline-year {
+            color: white;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+            border-color: var(--primary-color);
+        }
+
+        .timeline-image-placeholder {
+            width: 100%;
+            height: 180px;
+            background: var(--light-bg);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-image-placeholder:hover {
+            background: rgba(0, 123, 255, 0.05);
+            border-style: solid;
+        }
+
+        .timeline-image-placeholder i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            opacity: 0.6;
+        }
+
+        /* Timeline Responsive */
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                padding-left: 80px !important;
+                padding-right: 0 !important;
+            }
+
+            .timeline-marker {
+                left: 0 !important;
+                right: auto !important;
+            }
+
+            .timeline-content {
+                margin-left: 0;
+            }
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+        }
+
+        .service-card i {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .service-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            text-transform: uppercase;
+        }
+
+        .service-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background: var(--light-bg);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 2.5rem 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card.featured {
+            transform: scale(1.02);
+            background: var(--gradient-dark);
+            color: white;
+        }
+
+        .pricing-card.featured::before {
+            content: 'MAIS POPULAR';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.02) translateY(-10px);
+        }
+
+        .plan-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .plan-price {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-period {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features li {
+            padding: 0.5rem 0;
+            color: var(--text-light);
+        }
+
+        .plan-features li i {
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--gradient-dark);
+            color: white;
+        }
+
+        .contact-info h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .contact-info p {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-info i {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            width: 30px;
+        }
+
+        /* Login Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            backdrop-filter: blur(15px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 480px;
+            box-shadow: 
+                0 30px 80px rgba(0,0,0,0.3),
+                0 0 50px rgba(0, 123, 255, 0.1),
+                inset 0 1px 0 rgba(255,255,255,0.6);
+            animation: slideUp 0.4s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .close {
+            color: #999;
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.05);
+        }
+
+        .close:hover {
+            color: var(--primary-color);
+            background: rgba(0, 123, 255, 0.1);
+            transform: rotate(90deg);
+        }
+
+        .login-form {
+            padding: 3.5rem 3rem 2.5rem;
+            text-align: center;
+        }
+
+        .login-form::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 10px 30px rgba(0, 123, 255, 0.3),
+                inset 0 2px 10px rgba(255,255,255,0.3);
+        }
+
+        .login-form::after {
+            content: '\f007';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 2rem;
+            z-index: 2;
+        }
+
+        .login-form h2 {
+            font-family: 'Oswald', sans-serif;
+            text-align: center;
+            margin: 4rem 0 1rem;
+            color: var(--text-dark);
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, var(--text-dark) 0%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-subtitle {
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+            position: relative;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dark);
+            font-size: 0.85rem;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .input-container i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1.2rem 1.2rem 1.2rem 3.2rem;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.9);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: white;
+            box-shadow: 
+                0 0 0 3px rgba(0, 123, 255, 0.1),
+                0 8px 25px rgba(0, 123, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .form-group input:focus + i,
+        .input-container:focus-within i {
+            color: var(--primary-color);
+        }
+
+        .submit-btn {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 123, 255, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-bg);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .footer p {
+            font-size: 1.1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .services-grid,
+            .pricing-grid,
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .history-stats {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .about-image i {
+                font-size: 10rem;
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+            }
+            
+            .login-form {
+                padding: 3rem 1.5rem 2rem;
+            }
+            
+            .login-form h2 {
+                font-size: 1.8rem;
+                margin: 3.5rem 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <div class="logo-img"></div>
+                AsOne
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#historia">História</a></li>
+                <li><a href="#portfolio">Portfólio</a></li>
+                <li><a href="#services">Serviços</a></li>
+                <li><a href="#pricing">Planos</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+            <div>
+                <button class="login-btn" onclick="openLoginModal()">Área Cliente</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>AsOne</h1>
+            <p>Transforme o seu corpo, transforme a sua vida. Treinos personalizados e acompanhamento profissional para alcançar os seus objetivos de fitness.</p>
+            <div class="cta-buttons">
+                <a href="#services" class="cta-button">Começar Agora</a>
+                <a href="#about" class="cta-button cta-secondary">Saber Mais</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about">
+        <div class="container">
+            <h2 class="section-title">Sobre o AsOne</h2>
+            <p class="section-subtitle">O seu parceiro de confiança na jornada para uma vida mais saudável e ativa</p>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Excelência em Fitness</h3>
+                    <p>O AsOne é uma comunidade dedicada a transformar vidas através do exercício físico. Com equipamentos de última geração e uma equipa de profissionais altamente qualificados, oferecemos uma experiência de treino única e personalizada.</p>
+                    <p>A nossa filosofia baseia-se na ideia de que cada pessoa é única, e por isso cada programa de treino deve ser adaptado às suas necessidades específicas, objetivos e estilo de vida.</p>
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Equipamentos Modernos</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Profissionais Certificados</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Horários Flexíveis</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Ambiente Motivador</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <i class="fas fa-dumbbell pulse"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- História Section -->
+    <section id="historia" class="section portfolio">
+        <div class="container">
+            <h2 class="section-title">A Nossa História</h2>
+            <p class="section-subtitle">Conheça a jornada que nos trouxe até aqui</p>
+            
+            <!-- História da Empresa -->
+            <div class="history-content">
+                <div class="history-text">
+                    <p>O AsOne nasceu em 2020 de um sonho partilhado: criar um espaço onde cada pessoa pudesse descobrir o seu potencial máximo através do exercício físico. Fundado por uma equipa de profissionais apaixonados por fitness e bem-estar, começámos com uma visão simples mas poderosa - que todos merecem acesso a treino de qualidade e acompanhamento personalizado.</p>
+                    
+                    <p>Ao longo dos anos, evoluímos de um pequeno estúdio para um centro de excelência em fitness, sempre mantendo os nossos valores fundamentais: dedicação, profissionalismo e resultados reais. Hoje, orgulhamo-nos de ter transformado centenas de vidas e de continuar a crescer como uma família unida pela paixão do exercício físico.</p>
+                    
+                    <!-- Timeline -->
+                    <div class="timeline-container">
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-marker">
+                                    <div class="timeline-year">2020</div>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-image-placeholder">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker">
+                                    <div class="timeline-year">2022</div>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-image-placeholder">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker">
+                                    <div class="timeline-year">2025</div>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-image-placeholder">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="history-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">Anos de Experiência</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="section">
+        <div class="container">
+            <h2 class="section-title">O Nosso Espaço</h2>
+            <p class="section-subtitle">Equipamentos modernos e ambiente motivador para o seu treino</p>
+            
+            <!-- Portfolio de Imagens -->
+            <div class="portfolio-gallery">
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <div class="gallery-image-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <div class="container">
+            <h2 class="section-title">Os Nossos Serviços</h2>
+            <p class="section-subtitle">Programas completos de treino adaptados aos seus objetivos</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>Personal Training</h3>
+                    <p>Treinos individuais personalizados com acompanhamento dedicado de um personal trainer experiente para maximizar os seus resultados.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-apple-alt"></i>
+                    <h3>Nutrição</h3>
+                    <p>Planos alimentares personalizados criados por nutricionistas qualificados para complementar o seu programa de treino.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>Psicologia</h3>
+                    <p>Apoio psicológico especializado para desenvolver mentalidade positiva, motivação e superação de bloqueios mentais no seu percurso fitness.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="section pricing">
+        <div class="container">
+            <h2 class="section-title">Planos & Preços</h2>
+            <p class="section-subtitle">Escolha o plano que melhor se adapta ao seu estilo de vida e objetivos</p>
+            
+            <!-- Individual Plans -->
+            <div style="margin-bottom: 4rem;">
+                <h3 style="text-align: center; font-family: 'Oswald', sans-serif; font-size: 2rem; margin-bottom: 2rem; color: var(--text-dark); text-transform: uppercase;">Planos Individual</h3>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Individual</h3>
+                        <div class="plan-price">1x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 1 sessão semanal</li>
+                            <li><i class="fas fa-check"></i> Treino personalizado</li>
+                            <li><i class="fas fa-check"></i> Acompanhamento individual</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Individual</h3>
+                        <div class="plan-price">2x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 2 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino personalizado</li>
+                            <li><i class="fas fa-check"></i> Acompanhamento individual</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card featured">
+                        <h3 class="plan-name">Individual</h3>
+                        <div class="plan-price">3x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 3 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino personalizado</li>
+                            <li><i class="fas fa-check"></i> Acompanhamento individual</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Individual</h3>
+                        <div class="plan-price">4x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 4 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino personalizado</li>
+                            <li><i class="fas fa-check"></i> Acompanhamento individual</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Individual</h3>
+                        <div class="plan-price">5x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 5 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino personalizado</li>
+                            <li><i class="fas fa-check"></i> Acompanhamento individual</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Duo Plans -->
+            <div>
+                <h3 style="text-align: center; font-family: 'Oswald', sans-serif; font-size: 2rem; margin-bottom: 2rem; color: var(--text-dark); text-transform: uppercase;">Planos Duo</h3>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Duo</h3>
+                        <div class="plan-price">1x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 1 sessão semanal</li>
+                            <li><i class="fas fa-check"></i> Treino em casal/dupla</li>
+                            <li><i class="fas fa-check"></i> Motivação partilhada</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Duo</h3>
+                        <div class="plan-price">2x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 2 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino em casal/dupla</li>
+                            <li><i class="fas fa-check"></i> Motivação partilhada</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card featured">
+                        <h3 class="plan-name">Duo</h3>
+                        <div class="plan-price">3x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 3 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino em casal/dupla</li>
+                            <li><i class="fas fa-check"></i> Motivação partilhada</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Duo</h3>
+                        <div class="plan-price">4x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 4 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino em casal/dupla</li>
+                            <li><i class="fas fa-check"></i> Motivação partilhada</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Duo</h3>
+                        <div class="plan-price">5x</div>
+                        <div class="plan-period">por semana</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> 5 sessões semanais</li>
+                            <li><i class="fas fa-check"></i> Treino em casal/dupla</li>
+                            <li><i class="fas fa-check"></i> Motivação partilhada</li>
+                        </ul>
+                        <button class="cta-button">Escolher Plano</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <h2 class="section-title">Entre em Contacto</h2>
+            <p class="section-subtitle">Pronto para começar a sua transformação? Contacte-nos hoje!</p>
+            <div class="contact-info" style="max-width: 600px; margin: 0 auto; text-align: center;">
+                <h3>Informações de Contacto</h3>
+                <p><i class="fas fa-map-marker-alt"></i> R. João Conde, 4740-305 Esposende</p>
+                <p><i class="fas fa-phone"></i> +351 912 798 296</p>
+                <p><i class="fab fa-facebook"></i> facebook.com/asone.pt</p>
+                <p><i class="fab fa-instagram"></i> @asone.pt</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 AsOne. Todos os direitos reservados. | Transforme-se connosco!</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">Site desenvolvido por <a href="https://www.codecraftstudio.pt" target="_blank" style="color: var(--primary-color); text-decoration: none;">www.codecraftstudio.pt</a></p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <div class="login-form">
+                <h2>Área Cliente</h2>
+                <p class="login-subtitle">Aceda à sua conta para gerir os seus treinos</p>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <div class="input-container">
+                            <input type="email" id="email" name="email" required placeholder="Digite o seu email">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Palavra-passe</label>
+                        <div class="input-container">
+                            <input type="password" id="password" name="password" required placeholder="Digite a sua palavra-passe">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-sign-in-alt" style="margin-right: 0.5rem;"></i>
+                        Entrar
+                    </button>
+                </form>
+                
+                <div style="margin-top: 2rem; padding: 1rem; background: rgba(0, 123, 255, 0.1); border-radius: 10px; border-left: 4px solid var(--primary-color);">
+                    <p style="margin: 0; font-size: 0.9rem; color: var(--text-light);">
+                        <strong>Versão Demo:</strong> Este é um website estático. A funcionalidade de login não está implementada.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Login Modal
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('loginModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Handle login form submission (demo only)
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Funcionalidade de login não disponível na versão HTML estática. Para autenticação completa, utilize a versão PHP.');
+            closeLoginModal();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Pricing buttons
+        document.querySelectorAll('.pricing-card .cta-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const contactSection = document.querySelector('#contact');
+                if (contactSection) {
+                    contactSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Services animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Add animation to service cards
+        document.querySelectorAll('.service-card, .pricing-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Add animation to timeline items
+        document.querySelectorAll('.timeline-item').forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(50px)';
+            item.style.transition = `all 0.8s ease ${index * 0.2}s`;
+            observer.observe(item);
+        });
+
+        // Add animation to stats
+        document.querySelectorAll('.stat-item').forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(30px)';
+            item.style.transition = `all 0.6s ease ${index * 0.1}s`;
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html>
