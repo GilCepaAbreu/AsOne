@@ -55,6 +55,16 @@
             cursor: default;
         }
 
+        /* Hide scrollbar */
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
         /* Custom cursor effects */
         * {
             cursor: inherit;
@@ -132,32 +142,6 @@
             background-size: cover;
             background-position: center;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logo-img::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(37, 99, 235, 0.1) 50%, transparent 70%);
-            animation: logoShimmer 3s ease-in-out infinite;
-        }
-
-        @keyframes logoShimmer {
-            0%, 100% { transform: translateX(-100%) rotate(45deg); }
-            50% { transform: translateX(100%) rotate(45deg); }
-        }
-
-        .logo-img::before {
-            content: 'A1';
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--primary-color);
         }
 
         .nav-menu {
@@ -908,22 +892,28 @@
         }
 
         .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 2.5rem;
             margin-top: 3rem;
+            flex-wrap: wrap;
         }
 
         .pricing-card {
             background: var(--white);
-            padding: 3rem 2rem;
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-soft);
+            padding: 2.5rem 2rem 2rem 2rem;
+            border-radius: 28px;
+            box-shadow: 0 8px 32px rgba(37,99,235,0.10);
             text-align: center;
             position: relative;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            border: 2px solid transparent;
+            border: 2px solid var(--primary-color);
             overflow: hidden;
+            min-width: 270px;
+            max-width: 320px;
+            flex: 1 1 300px;
+            margin-bottom: 2rem;
         }
 
         .pricing-card::before {
@@ -967,9 +957,9 @@
         }
 
         .pricing-card:hover {
-            transform: translateY(-15px);
-            border-color: var(--primary-color);
-            box-shadow: var(--shadow-large);
+            transform: translateY(-10px) scale(1.04);
+            border-color: var(--accent-color);
+            box-shadow: 0 16px 40px rgba(37,99,235,0.18);
         }
 
         .pricing-card.featured:hover {
@@ -978,10 +968,11 @@
 
         .plan-name {
             font-family: 'Oswald', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
             text-transform: uppercase;
+            color: var(--primary-color);
         }
 
         .plan-price {
@@ -1491,6 +1482,10 @@
                 padding: 0 1rem;
                 width: 100%;
                 max-width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                position: relative;
             }
             
             .nav-menu {
@@ -1499,12 +1494,36 @@
 
             /* Logo adjustments for mobile */
             .logo {
-                font-size: 2rem;
+                font-size: 2.5rem;
+                position: static;
+                transform: none;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
             }
             
             .logo-img {
-                width: 40px;
-                height: 40px;
+                width: 50px;
+                height: 50px;
+            }
+
+            /* Esconder o texto AsOne do logo original em mobile */
+            .logo span {
+                display: none;
+            }
+
+            /* Nome AsOne centralizado como elemento separado */
+            .mobile-logo-text {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                font-family: 'Caveat', 'Edu NSW ACT Cursive', cursive;
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: var(--primary-color);
+                letter-spacing: 2px;
+                pointer-events: none;
             }
 
             /* Mostrar apenas o botão Área Cliente em mobile */
@@ -1608,6 +1627,49 @@
                 word-wrap: break-word;
                 overflow-wrap: break-word;
             }
+
+            /* Melhorar seções Sobre e História em mobile */
+            .about-text, .history-text {
+                padding: 1.5rem;
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 20px;
+                box-shadow: 0 8px 32px rgba(37, 99, 235, 0.1);
+                margin-bottom: 2rem;
+                border: 1px solid rgba(37, 99, 235, 0.1);
+            }
+
+            .about-text h3 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+                color: var(--primary-color);
+                text-align: center;
+            }
+
+            .about-text p, .history-text p {
+                font-size: 1rem;
+                line-height: 1.6;
+                margin-bottom: 1.5rem;
+                text-align: justify;
+                color: var(--text-dark);
+            }
+
+            .about-features {
+                margin-top: 2rem;
+                padding: 1rem;
+                background: rgba(37, 99, 235, 0.05);
+                border-radius: 15px;
+            }
+
+            .feature-item {
+                padding: 0.75rem 0;
+                font-size: 0.95rem;
+            }
+
+            .feature-item i {
+                color: var(--primary-color);
+                margin-right: 0.75rem;
+                font-size: 1.1rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1661,6 +1723,41 @@
             .section-subtitle {
                 font-size: 1rem;
                 padding: 0 0.5rem;
+            }
+
+            /* História section mobile styling */
+            .timeline-container {
+                padding: 1rem;
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 20px;
+                box-shadow: 0 8px 32px rgba(37, 99, 235, 0.1);
+                margin-top: 2rem;
+            }
+
+            .timeline-item {
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+                background: rgba(37, 99, 235, 0.05);
+                border-radius: 15px;
+            }
+
+            .timeline-year {
+                font-size: 1.2rem;
+                font-weight: bold;
+                color: white;
+                margin-bottom: 0.5rem;
+            }
+
+            .timeline-content h4 {
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+                color: var(--text-dark);
+            }
+
+            .timeline-content p {
+                font-size: 0.95rem;
+                line-height: 1.5;
+                color: var(--text-light);
             }
 
             .pricing-grid {
@@ -1966,130 +2063,23 @@
     <!-- Pricing Section -->
     <section id="pricing" class="section pricing">
         <div class="container">
-            <h2 class="section-title">Planos</h2>
-            <p class="section-subtitle">Escolha o plano que melhor se adapta ao seu estilo de vida e objetivos</p>
-            
-            <!-- Individual Plans -->
-            <div style="margin-bottom: 4rem;">
-                <h3 style="text-align: center; font-family: 'Oswald', sans-serif; font-size: 2rem; margin-bottom: 2rem; color: var(--text-dark); text-transform: uppercase;">Planos Individual</h3>
-                <div class="pricing-grid">
-                    <div class="pricing-card">
-                        <h3 class="plan-name">Individual</h3>
-                        <div class="plan-price">1x</div>
-                        <div class="plan-period">por semana</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> 1 sessão semanal</li>
-                            <li><i class="fas fa-check"></i> Treino personalizado</li>
-                            <li><i class="fas fa-check"></i> Acompanhamento individual</li>
-                        </ul>
-                        <button class="cta-button">Escolher Plano</button>
-                    </div>
-                    <div class="pricing-card">
-                        <h3 class="plan-name">Individual</h3>
-                        <div class="plan-price">2x</div>
-                        <div class="plan-period">por semana</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> 2 sessões semanais</li>
-                            <li><i class="fas fa-check"></i> Treino personalizado</li>
-                            <li><i class="fas fa-check"></i> Acompanhamento individual</li>
-                        </ul>
-                        <button class="cta-button">Escolher Plano</button>
-                    </div>
-                    <div class="pricing-card featured">
-                        <h3 class="plan-name">Individual</h3>
-                        <div class="plan-price">3x</div>
-                        <div class="plan-period">por semana</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> 3 sessões semanais</li>
-                            <li><i class="fas fa-check"></i> Treino personalizado</li>
-                            <li><i class="fas fa-check"></i> Acompanhamento individual</li>
-                        </ul>
-                        <button class="cta-button">Escolher Plano</button>
-                    </div>
-                    <div class="pricing-card">
-                        <h3 class="plan-name">Individual</h3>
-                        <div class="plan-price">4x</div>
-                        <div class="plan-period">por semana</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> 4 sessões semanais</li>
-                            <li><i class="fas fa-check"></i> Treino personalizado</li>
-                            <li><i class="fas fa-check"></i> Acompanhamento individual</li>
-                        </ul>
-                        <button class="cta-button">Escolher Plano</button>
-                    </div>
-                    <div class="pricing-card">
-                        <h3 class="plan-name">Individual</h3>
-                        <div class="plan-price">5x</div>
-                        <div class="plan-period">por semana</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> 5 sessões semanais</li>
-                            <li><i class="fas fa-check"></i> Treino personalizado</li>
-                            <li><i class="fas fa-check"></i> Acompanhamento individual</li>
-                        </ul>
-                        <button class="cta-button">Escolher Plano</button>
-                    </div>
+            <h2 class="section-title">Treinos</h2>
+            <p class="section-subtitle">Escolha o tipo de treino ideal para si</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <i class="fas fa-user" style="font-size:2.5rem;color:var(--primary-color);margin-bottom:1rem;"></i>
+                    <h3 class="plan-name">Treinos Individuais</h3>
+                    <p style="color:var(--text-light);font-size:1.1rem;">Treinos personalizados e acompanhamento individual para maximizar os seus resultados.</p>
                 </div>
-            </div>
-
-            <!-- Duo Plans -->
-            <div>
-                <h3 style="text-align: center; font-family: 'Oswald', sans-serif; font-size: 2rem; margin-bottom: 2rem; color: var(--text-dark); text-transform: uppercase;">Planos Duo</h3>
-                <div class="pricing-grid">
-                    <div class="pricing-card">
-                        <h3 class="plan-name">Duo</h3>
-                        <div class="plan-price">1x</div>
-                        <div class="plan-period">por semana</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> 1 sessão semanal</li>
-                            <li><i class="fas fa-check"></i> Treino em casal/dupla</li>
-                            <li><i class="fas fa-check"></i> Motivação partilhada</li>
-                        </ul>
-                        <button class="cta-button">Escolher Plano</button>
-                    </div>
-                    <div class="pricing-card">
-                        <h3 class="plan-name">Duo</h3>
-                        <div class="plan-price">2x</div>
-                        <div class="plan-period">por semana</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> 2 sessões semanais</li>
-                            <li><i class="fas fa-check"></i> Treino em casal/dupla</li>
-                            <li><i class="fas fa-check"></i> Motivação partilhada</li>
-                        </ul>
-                        <button class="cta-button">Escolher Plano</button>
-                    </div>
-                    <div class="pricing-card featured">
-                        <h3 class="plan-name">Duo</h3>
-                        <div class="plan-price">3x</div>
-                        <div class="plan-period">por semana</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> 3 sessões semanais</li>
-                            <li><i class="fas fa-check"></i> Treino em casal/dupla</li>
-                            <li><i class="fas fa-check"></i> Motivação partilhada</li>
-                        </ul>
-                        <button class="cta-button">Escolher Plano</button>
-                    </div>
-                    <div class="pricing-card">
-                        <h3 class="plan-name">Duo</h3>
-                        <div class="plan-price">4x</div>
-                        <div class="plan-period">por semana</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> 4 sessões semanais</li>
-                            <li><i class="fas fa-check"></i> Treino em casal/dupla</li>
-                            <li><i class="fas fa-check"></i> Motivação partilhada</li>
-                        </ul>
-                        <button class="cta-button">Escolher Plano</button>
-                    </div>
-                    <div class="pricing-card">
-                        <h3 class="plan-name">Duo</h3>
-                        <div class="plan-price">5x</div>
-                        <div class="plan-period">por semana</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> 5 sessões semanais</li>
-                            <li><i class="fas fa-check"></i> Treino em casal/dupla</li>
-                            <li><i class="fas fa-check"></i> Motivação partilhada</li>
-                        </ul>
-                        <button class="cta-button">Escolher Plano</button>
-                    </div>
+                <div class="pricing-card">
+                    <i class="fas fa-users" style="font-size:2.5rem;color:var(--accent-color);margin-bottom:1rem;"></i>
+                    <h3 class="plan-name">Treinos Duos</h3>
+                    <p style="color:var(--text-light);font-size:1.1rem;">Treine em dupla e partilhe a motivação com um parceiro, mantendo o acompanhamento profissional.</p>
+                </div>
+                <div class="pricing-card">
+                    <i class="fas fa-calendar-check" style="font-size:2.5rem;color:#22c55e;margin-bottom:1rem;"></i>
+                    <h3 class="plan-name">Treinos Esporádicos</h3>
+                    <p style="color:var(--text-light);font-size:1.1rem;">Ideal para quem procura flexibilidade e sessões avulsas, sem compromisso semanal.</p>
                 </div>
             </div>
         </div>
@@ -2285,6 +2275,27 @@
                 hero.style.transform = `translateY(${rate}px)`;
             }
         });
+
+        // Mobile navbar layout adjustment
+        function setupMobileNavbar() {
+            if (window.innerWidth <= 768) {
+                const navContainer = document.querySelector('.nav-container');
+                if (navContainer && !document.querySelector('.mobile-logo-text')) {
+                    const mobileText = document.createElement('div');
+                    mobileText.className = 'mobile-logo-text';
+                    navContainer.appendChild(mobileText);
+                }
+            } else {
+                const mobileText = document.querySelector('.mobile-logo-text');
+                if (mobileText) {
+                    mobileText.remove();
+                }
+            }
+        }
+
+        // Run on load and resize
+        setupMobileNavbar();
+        window.addEventListener('resize', setupMobileNavbar);
     </script>
 </body>
 </html>
